@@ -9,7 +9,7 @@ import org.springframework.batch.core.configuration.annotation.JobScope
 import org.springframework.batch.core.job.builder.JobBuilder
 import org.springframework.batch.core.repository.JobRepository
 import org.springframework.batch.core.step.builder.StepBuilder
-import org.springframework.batch.item.data.RepositoryItemReader
+import org.springframework.batch.item.database.JpaPagingItemReader
 import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
@@ -22,7 +22,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement
 class PurchaseConfirmedJobConfig(
     private val jobRepository: JobRepository,
     private val transactionManager: PlatformTransactionManager,
-    @Qualifier("deliveryCompletedJpaItemReader") private val deliveryCompletedJpaItemReader: RepositoryItemReader<OrderItem>,
+    @Qualifier("deliveryCompletedJpaItemReader") private val deliveryCompletedJpaItemReader: JpaPagingItemReader<OrderItem>,
     private val orderItemRepository: OrderItemRepository,
 ) {
     @Suppress("ktlint:standard:property-naming")

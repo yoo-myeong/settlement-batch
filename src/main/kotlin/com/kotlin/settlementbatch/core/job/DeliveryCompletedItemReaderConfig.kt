@@ -2,6 +2,7 @@ package com.kotlin.settlementbatch.core.job
 
 import com.kotlin.settlementbatch.domain.entity.order.OrderItem
 import com.kotlin.settlementbatch.infrastructure.database.repository.OrderItemRepository
+import jakarta.persistence.EntityManager
 import org.springframework.batch.item.database.JpaPagingItemReader
 import org.springframework.batch.item.database.builder.JpaPagingItemReaderBuilder
 import org.springframework.context.annotation.Bean
@@ -12,7 +13,9 @@ import java.time.ZoneId
 import java.time.ZonedDateTime
 
 @Configuration
-class DeliveryCompletedItemReaderConfig {
+class DeliveryCompletedItemReaderConfig(
+    private val entityManager: EntityManager,
+) {
     val chunkSize = 500
     val startDateTime: ZonedDateTime =
         ZonedDateTime.of(
@@ -34,6 +37,7 @@ class DeliveryCompletedItemReaderConfig {
 
         return JpaPagingItemReaderBuilder<OrderItem>()
             .name("deliveryCompletedJpaItemReader")
+            .entityManagerFactory(this.entityManager.entityManagerFactory)
             .pageSize(this.chunkSize)
             .queryProvider(queryProvider)
             .build()

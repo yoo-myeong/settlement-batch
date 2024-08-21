@@ -2,7 +2,10 @@ package com.kotlin.settlementbatch.domain.entity.order
 
 import com.kotlin.settlementbatch.domain.entity.Product
 import com.kotlin.settlementbatch.domain.entity.Seller
+import com.kotlin.settlementbatch.domain.enums.TaxType
+import com.kotlin.settlementbatch.domain.enums.TaxTypeConverter
 import jakarta.persistence.Column
+import jakarta.persistence.Convert
 import jakarta.persistence.Entity
 import jakarta.persistence.GeneratedValue
 import jakarta.persistence.GenerationType
@@ -32,7 +35,8 @@ data class OrderItemSnapshot(
     val mileageUsageAmount: BigDecimal? = BigDecimal.ZERO,
     val itemCategory: Int? = 0, // TODO : Enum으로 변경
     val taxRate: Int? = 3,
-    val taxType: String,
+    @Convert(converter = TaxTypeConverter::class)
+    val taxType: TaxType,
     @ManyToOne
     @JoinColumn(name = "seller_no", insertable = false, updatable = false)
     val seller: Seller,

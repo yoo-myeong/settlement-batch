@@ -11,6 +11,8 @@ class DailySettlementItemWriter(
     private val settlementDailyRepository: SettlementDailyRepository,
 ) : ItemWriter<SettlementDaily> {
     override fun write(chunk: Chunk<out SettlementDaily>) {
+        throw Exception()
+
         for (item in chunk.items) {
             settlementDailyRepository.save(item)
         }

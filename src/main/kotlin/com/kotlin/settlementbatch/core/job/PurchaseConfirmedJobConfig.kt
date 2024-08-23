@@ -1,5 +1,6 @@
 package com.kotlin.settlementbatch.core.job
 
+import com.kotlin.settlementbatch.core.listener.PurchaseConfirmedChunkListener
 import com.kotlin.settlementbatch.domain.entity.SettlementDaily
 import com.kotlin.settlementbatch.domain.entity.claim.ClaimItem
 import com.kotlin.settlementbatch.domain.entity.order.OrderItem
@@ -50,6 +51,8 @@ class PurchaseConfirmedJobConfig(
             .chunk<OrderItem, OrderItem>(this.chunkSize, transactionManager)
             .reader(deliveryCompletedJpaItemReader)
             .writer(purChaseConfirmedItemWriter())
+            .listener(PurchaseConfirmedChunkListener())
+            .allowStartIfComplete(true)
             .build()
 
     @Bean

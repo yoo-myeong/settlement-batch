@@ -36,7 +36,7 @@ data class OrderItemSnapshot(
     val itemCategory: Int? = 0, // TODO : Enum으로 변경
     val taxRate: Int? = 3,
     @Convert(converter = TaxTypeConverter::class)
-    val taxType: TaxType,
+    val taxType: TaxType = TaxType.TAX,
     @ManyToOne
     @JoinColumn(name = "seller_no", insertable = false, updatable = false)
     val seller: Seller,
